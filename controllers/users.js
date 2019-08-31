@@ -1,6 +1,7 @@
 const User = require("../model/User");
 const APIKEY = require("../config/apiKey");
 const fetch = require("node-fetch");
+const auth = require("../middleware/auth");
 
 exports.getUsers = async (req, res, next) => {
   try {
@@ -34,17 +35,10 @@ exports.createUser = async (req, res, next) => {
 };
 
 exports.getEvents = async (req, res, next) => {
-  const headers = {
-    "content-Type": "application/json",
-    Authorization: "Bearer XVHCUJPXYXCHAS6FEXYC"
-  };
-
   const request = await fetch(
-    `https://www.eventbriteapi.com/v3/events/search?location.address="london"`,
-    {
-      headers
-    }
+    `https://app.ticketmaster.com/discovery/v2/events.json?countryCode=UK&apikey=${APIKEY}`
   );
+
   const response = await request.json();
-  res.json(response.events);
+  res.json(response);
 };
