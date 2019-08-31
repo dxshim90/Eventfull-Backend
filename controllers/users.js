@@ -1,4 +1,6 @@
 const User = require("../model/User");
+const APIKEY = require("../config/apiKey");
+const fetch = require("node-fetch");
 
 exports.getUsers = async (req, res, next) => {
   try {
@@ -29,4 +31,20 @@ exports.createUser = async (req, res, next) => {
   } catch (error) {
     console.log(error);
   }
+};
+
+exports.getEvents = async (req, res, next) => {
+  const headers = {
+    "content-Type": "application/json",
+    Authorization: "Bearer XVHCUJPXYXCHAS6FEXYC"
+  };
+
+  const request = await fetch(
+    `https://www.eventbriteapi.com/v3/events/search?location.address="london"`,
+    {
+      headers
+    }
+  );
+  const response = await request.json();
+  res.json(response.events);
 };
