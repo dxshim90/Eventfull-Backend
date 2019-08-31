@@ -4,6 +4,9 @@ const morgan = require("morgan");
 const mongoose = require("mongoose");
 const mongodbString = require("./config/mongodb");
 const userRoutes = require("./Routes/users");
+const authRouter = require("./routes/auth");
+const authMiddleware = require("./middleware/auth");
+const errorMiddleware = require("./middleware/error");
 
 const app = express();
 
@@ -18,6 +21,9 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 // parse application/json
 app.use(bodyParser.json());
+app.use("/auth", authRouter);
+app.use("*", authMiddleware);
+app.use(errorMiddleware);
 
 app.get("/"),
   (req, res) => {
