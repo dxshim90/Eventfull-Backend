@@ -34,16 +34,14 @@ exports.createUser = async (req, res, next) => {
 };
 
 exports.getEvents = async (req, res, next) => {
-  const headers = {
-    "content-Type": "application/json",
-    Authorization: "Bearer XVHCUJPXYXCHAS6FEXYC"
-  };
+  // const headers = {
+  //   "content-Type": "application/json",
+  //   Authorization: "Bearer XVHCUJPXYXCHAS6FEXYC"
+  // };
 
   const request = await fetch(
-    `https://www.eventbriteapi.com/v3/events/search?location.address="london"`,
-    {
-      headers
-    }
+    `https://app.ticketmaster.com/discovery/v2/events.json?countryCode=US&apikey=${APIKEY}`,
+   
   );
   const response = await request.json();
   res.json(response.events);

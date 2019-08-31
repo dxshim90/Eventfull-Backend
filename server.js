@@ -24,13 +24,12 @@ app.use(bodyParser.json());
 app.use("/auth", authRouter);
 app.use("*", authMiddleware);
 app.use(errorMiddleware);
+app.use("/users", userRoutes);
 
 app.get("/"),
   (req, res) => {
     res.json("Working");
   };
-
-app.use("/users", userRoutes);
 
 const PORT = process.env.PORT || 3000;
 
